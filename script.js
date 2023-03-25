@@ -15,8 +15,41 @@ function divide(num1, num2) {
 }
 
 function operate(operator, num1, num2) {
-    if (operator === '+') add(num1, num2);
-    if (operator === '-') substract(num1, num2);
-    if (operator === '*') multiply(num1, num2);
-    if (operator === '/') divide(num1, num2);
+    if (operator === '+') return add(num1, num2);
+    if (operator === '-') return substract(num1, num2);
+    if (operator === '*') return multiply(num1, num2);
+    if (operator === '/') return divide(num1, num2);
 }
+
+const numButtons = Array.from(document.querySelectorAll('.number'));
+const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const operationDisplay = document.querySelector('.display');
+
+let num1 = '';
+let num2 = '';
+let operator = '';
+let solution = 0;
+
+numButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (!operator) {
+            num1 += button.value;
+            operationDisplay.textContent = num1;
+        }
+        else { 
+            num2 += button.value;
+            operationDisplay.textContent = num2;
+        }
+    });
+});
+
+operatorButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (num2) solution = operate(operator, Number(num1), Number(num2));
+        else solution = num1;
+        operator = button.value;
+        num1 = solution;
+        num2 = '';
+        operationDisplay.textContent = solution;
+    });
+});
