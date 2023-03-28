@@ -23,6 +23,7 @@ function operate(operator, num1, num2) {
 
 const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const point = document.querySelector('.point');
 const operationDisplay = document.querySelector('.display');
 
 let num1 = '';
@@ -47,9 +48,13 @@ operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
         if (num2) solution = operate(operator, Number(num1), Number(num2));
         else solution = num1;
-        operator = button.value;
+        if (button.value !== '=') operator = button.value;
         num1 = solution;
         num2 = '';
         operationDisplay.textContent = solution;
     });
 });
+
+function allowDecimal(num) {
+    return num.includes(',');
+}
