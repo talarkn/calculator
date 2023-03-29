@@ -1,0 +1,46 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.calculator {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    width: 250px;
+    border: solid black;
+}
+
+.display {
+    height: 50px;
+    border: solid grey;
+    font-size: 30px;
+    text-align: right;
+    padding-top: 8px;
+}
+
+.buttons, .left-buttons, .right-buttons {
+    display: flex;
+}
+
+.left-buttons, .right-buttons {
+    height: 100%;
+}
+
+.left-buttons {
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+}
+
+.right-buttons {
+    flex-direction: column;
+    justify-content: stretch;
+    flex: 1 0 60px;
+}
+
+button {
+    box-sizing: border-box;
+    height: 20%;
+    padding: 10px;
+    flex: 1 1 60px;
+}
