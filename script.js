@@ -25,6 +25,7 @@ const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
 const point = document.querySelector('.point');
 const operationDisplay = document.querySelector('.display');
+const clearButton = document.querySelector('.clear');
 
 let num1 = '';
 let num2 = '';
@@ -46,7 +47,7 @@ numButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        if (num2) solution = operate(operator, Number(num1), Number(num2));
+        if (num2) solution = operate(operator, Number(num1), Number(num2)).toFixed(2);
         else solution = num1;
         if (button.value !== '=') operator = button.value;
         num1 = solution;
@@ -58,3 +59,9 @@ operatorButtons.forEach((button) => {
 function allowDecimal(num) {
     return num.includes(',');
 }
+
+clearButton.addEventListener('click', () => {
+    operationDisplay.textContent = '';
+    num1 = num2 = operator = '';
+    solution = 0;
+});
