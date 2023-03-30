@@ -21,6 +21,32 @@ function operate(operator, num1, num2) {
     if (operator === '/') return divide(num1, num2);
 }
 
+function getNumber(event) {
+    if (!operator) {
+        num1 += event.target.value;
+        operationDisplay.textContent = num1;
+    }
+    else { 
+        num2 += event.target.value;
+        operationDisplay.textContent = num2;
+    }
+}
+
+function getOperator(event) {
+    if (num2) solution = operate(operator, Number(num1), Number(num2));
+    else solution = num1;
+    if (event.target.value !== '=') operator = event.target.value;
+    num1 = solution;
+    num2 = '';
+    operationDisplay.textContent = solution;
+}
+
+function clear() {
+    num1 = num2 = operator = '';
+    solution = 0;
+    operationDisplay.textContent = '';
+}
+
 const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
 const point = document.querySelector('.point');
@@ -32,36 +58,12 @@ let num2 = '';
 let operator = '';
 let solution = 0;
 
-numButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        if (!operator) {
-            num1 += button.value;
-            operationDisplay.textContent = num1;
-        }
-        else { 
-            num2 += button.value;
-            operationDisplay.textContent = num2;
-        }
-    });
-});
+numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
 
-operatorButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        if (num2) solution = operate(operator, Number(num1), Number(num2)).toFixed(2);
-        else solution = num1;
-        if (button.value !== '=') operator = button.value;
-        num1 = solution;
-        num2 = '';
-        operationDisplay.textContent = solution;
-    });
-});
+operatorButtons.forEach((button) => {button.addEventListener('click', getOperator)});
+
+clearButton.addEventListener('click', clear);
 
 function allowDecimal(num) {
     return num.includes(',');
 }
-
-clearButton.addEventListener('click', () => {
-    operationDisplay.textContent = '';
-    num1 = num2 = operator = '';
-    solution = 0;
-});
