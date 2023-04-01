@@ -21,15 +21,25 @@ function operate(operator, num1, num2) {
     if (operator === '/') return divide(num1, num2);
 }
 
+const numButtons = Array.from(document.querySelectorAll('.number'));
+const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const point = document.querySelector('.point');
+const operationDisplay = document.querySelector('.display');
+const clearButton = document.querySelector('.clear');
+const decimal = document.querySelector('.decimal');
+
 function getNumber(event) {
     if (!operator) {
+        if (includesDecimal(num1)) decimal.value = '';
         num1 += event.target.value;
         operationDisplay.textContent = num1;
     }
-    else { 
+    else {
+        if (includesDecimal(num2)) decimal.value = '';
         num2 += event.target.value;
         operationDisplay.textContent = num2;
     }
+    decimal.value = '.';
 }
 
 function getOperator(event) {
@@ -47,11 +57,9 @@ function clear() {
     operationDisplay.textContent = '';
 }
 
-const numButtons = Array.from(document.querySelectorAll('.number'));
-const operatorButtons = Array.from(document.querySelectorAll('.operator'));
-const point = document.querySelector('.point');
-const operationDisplay = document.querySelector('.display');
-const clearButton = document.querySelector('.clear');
+function includesDecimal(num) {
+    return num.includes('.');
+}
 
 let num1 = '';
 let num2 = '';
@@ -63,7 +71,3 @@ numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
 operatorButtons.forEach((button) => {button.addEventListener('click', getOperator)});
 
 clearButton.addEventListener('click', clear);
-
-function allowDecimal(num) {
-    return num.includes(',');
-}
