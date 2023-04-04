@@ -7,7 +7,7 @@ body {
     margin: 150px auto;
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 355px;
     width: 250px;
     border: solid black 3px;
     border-radius: 2%;
@@ -15,8 +15,8 @@ body {
 }
 
 .display {
-    height: 50px;
-    font-size: 30px;
+    height: 55px;
+    font-size: 34px;
     text-align: right;
     padding-top: 8px;
     background-color: white;
