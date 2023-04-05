@@ -28,18 +28,19 @@ const operationDisplay = document.querySelector('.display');
 const clearButton = document.querySelector('.clear');
 const decimal = document.querySelector('.decimal');
 
+operationDisplay.textContent = 0;
+
 function getNumber(event) {
-    if (!operator) {
-        if (includesDecimal(num1)) decimal.value = '';
-        num1 += event.target.value;
-        operationDisplay.textContent = num1;
-    }
-    else {
-        if (includesDecimal(num2)) decimal.value = '';
-        num2 += event.target.value;
-        operationDisplay.textContent = num2;
-    }
+    if (!operator) num1 = addDigit(event, num1);
+    else num2 = addDigit(event, num2);
     decimal.value = '.';
+}
+
+function addDigit(event, num) {
+    if (num.includes('.')) decimal.value = '';
+    num += event.target.value;
+    operationDisplay.textContent = num;
+    return num;
 }
 
 function getOperator(event) {
@@ -54,11 +55,7 @@ function getOperator(event) {
 function clear() {
     num1 = num2 = operator = '';
     solution = 0;
-    operationDisplay.textContent = '';
-}
-
-function includesDecimal(num) {
-    return num.includes('.');
+    operationDisplay.textContent = 0;
 }
 
 let num1 = '';
