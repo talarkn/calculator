@@ -21,6 +21,11 @@ function operate(operator, num1, num2) {
     if (operator === '/') return divide(num1, num2);
 }
 
+let num1 = '';
+let num2 = '';
+let operator = '';
+let solution = 0;
+
 const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
 const point = document.querySelector('.point');
@@ -29,7 +34,7 @@ const clearButton = document.querySelector('.clear');
 const decimal = document.querySelector('.decimal');
 
 operationDisplay.textContent = 0;
-
+// do function to display max 14 chars for the numbers otherwise round it
 function getNumber(event) {
     if (!operator) num1 = addDigit(event, num1);
     else num2 = addDigit(event, num2);
@@ -37,10 +42,15 @@ function getNumber(event) {
 }
 
 function addDigit(event, num) {
-    if (num.includes('.')) decimal.value = '';
-    num += event.target.value;
+    if (num.toString().includes('.')) decimal.value = '';
+    else if (num === '' && event.target.value === '.') num = 0;
+
+    if (event.target.value === '%') num *= 0.01; 
+    else if (event.target.value === '+/-') num *= -1;
+    else num += event.target.value;
+
     operationDisplay.textContent = num;
-    return num;
+    return num === 0 ? '' : num;
 }
 
 function getOperator(event) {
@@ -57,11 +67,6 @@ function clear() {
     solution = 0;
     operationDisplay.textContent = 0;
 }
-
-let num1 = '';
-let num2 = '';
-let operator = '';
-let solution = 0;
 
 numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
 
