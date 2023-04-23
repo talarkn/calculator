@@ -37,16 +37,16 @@ operationDisplay.textContent = 0;
 
 function getNumber(event) {
     if (!operator) {
-        num1 = addDigit(event, num1).toString().slice(0, 9);
-        operationDisplay.textContent = num1;
+        num1 = addDigit(event, num1);
+        operationDisplay.textContent = roundSolution(num1);
     }
     else {
-        num2 = addDigit(event, num2).toString().slice(0, 9);
-        operationDisplay.textContent = num2;
+        num2 = addDigit(event, num2);
+        operationDisplay.textContent = roundSolution(num2);
     }
     decimal.value = '.';
 }
-
+// % or +/- applies after calculation is resulting in empty string -> check num2
 function addDigit(event, num) {
     if (num.toString().includes('.')) decimal.value = '';
     else if (num === '' && event.target.value === '.') num = 0;
@@ -74,7 +74,7 @@ function clear() {
 }
 
 function roundSolution(solution) {
-    if (solution.toString().length > 9) return solution.toExponential(3);
+    if (solution.toString().length > 9) return Number(solution).toExponential(3);
     else return solution;
 }
 
