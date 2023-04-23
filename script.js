@@ -34,10 +34,16 @@ const clearButton = document.querySelector('.clear');
 const decimal = document.querySelector('.decimal');
 
 operationDisplay.textContent = 0;
-// do function to display max 14 chars for the numbers otherwise round it
+
 function getNumber(event) {
-    if (!operator) num1 = addDigit(event, num1);
-    else num2 = addDigit(event, num2);
+    if (!operator) {
+        num1 = addDigit(event, num1).toString().slice(0, 9);
+        operationDisplay.textContent = num1;
+    }
+    else {
+        num2 = addDigit(event, num2).toString().slice(0, 9);
+        operationDisplay.textContent = num2;
+    }
     decimal.value = '.';
 }
 
@@ -49,7 +55,6 @@ function addDigit(event, num) {
     else if (event.target.value === '+/-') num *= -1;
     else num += event.target.value;
 
-    operationDisplay.textContent = num;
     return num === 0 ? '' : num;
 }
 
