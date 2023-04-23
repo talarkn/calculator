@@ -64,13 +64,18 @@ function getOperator(event) {
     if (event.target.value !== '=') operator = event.target.value;
     num1 = solution;
     num2 = '';
-    operationDisplay.textContent = solution;
+    operationDisplay.textContent = roundSolution(solution);
 }
 
 function clear() {
     num1 = num2 = operator = '';
     solution = 0;
     operationDisplay.textContent = 0;
+}
+
+function roundSolution(solution) {
+    if (solution.toString().length > 9) return solution.toExponential(3);
+    else return solution;
 }
 
 numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
