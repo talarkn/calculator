@@ -38,11 +38,11 @@ operationDisplay.textContent = 0;
 function getNumber(event) {
     if (!operator) {
         num1 = addDigit(event, num1);
-        operationDisplay.textContent = roundSolution(num1);
+        operationDisplay.textContent = cleanNumber(num1);
     }
     else {
         num2 = addDigit(event, num2);
-        operationDisplay.textContent = roundSolution(num2);
+        operationDisplay.textContent = cleanNumber(num2);
     }
     decimal.value = '.';
 }
@@ -51,9 +51,9 @@ function addDigit(event, num) {
     if (num.toString().includes('.')) decimal.value = '';
     else if (num === '' && event.target.value === '.') num = 0;
 
-    if (event.target.value === '%') num *= 0.01; 
-    else if (event.target.value === '+/-') num *= -1;
-    else num += event.target.value;
+    //if (event.target.value === '%') num *= 0.01; 
+    //else if (event.target.value === '+/-') num *= -1;
+    num += event.target.value;
 
     return num === 0 ? '' : num;
 }
@@ -64,7 +64,7 @@ function getOperator(event) {
     if (event.target.value !== '=') operator = event.target.value;
     num1 = solution;
     num2 = '';
-    operationDisplay.textContent = roundSolution(solution);
+    operationDisplay.textContent = cleanNumber(solution);
 }
 
 function clear() {
@@ -73,9 +73,9 @@ function clear() {
     operationDisplay.textContent = 0;
 }
 
-function roundSolution(solution) {
-    if (solution.toString().length > 9) return Number(solution).toExponential(3);
-    else return solution;
+function cleanNumber(num) {
+    if (num.toString().length > 9) return parseFloat(num).toExponential(3);
+    else return num;
 }
 
 numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
