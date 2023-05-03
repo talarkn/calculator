@@ -1,3 +1,14 @@
+let num1 = '';
+let num2 = '';
+let operator = '';
+let solution = 0;
+
+const numButtons = Array.from(document.querySelectorAll('.number'));
+const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const operationDisplay = document.querySelector('.display');
+const clearButton = document.querySelector('.clear');
+const decimal = document.querySelector('.decimal');
+
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -21,29 +32,13 @@ function operate(operator, num1, num2) {
     if (operator === '/') return divide(num1, num2);
 }
 
-let num1 = '';
-let num2 = '';
-let operator = '';
-let solution = 0;
-
-const numButtons = Array.from(document.querySelectorAll('.number'));
-const operatorButtons = Array.from(document.querySelectorAll('.operator'));
-const point = document.querySelector('.point');
-const operationDisplay = document.querySelector('.display');
-const clearButton = document.querySelector('.clear');
-const decimal = document.querySelector('.decimal');
-
-operationDisplay.textContent = 0;
-
 function getNumber(event) {
-    if (!operator) {
-        num1 = addDigit(event, num1).toString().slice(0, 9);
-        operationDisplay.textContent = num1;
-    }
-    else {
-        num2 = addDigit(event, num2).toString().slice(0, 9);
-        operationDisplay.textContent = num2;
-    }
+    let displayedNum;
+    
+    if (!operator) displayedNum = num1 = addDigit(event, num1);
+    else displayedNum = num2 = addDigit(event, num2);
+
+    operationDisplay.textContent = displayedNum;
     decimal.value = '.';
 }
 
@@ -53,9 +48,9 @@ function addDigit(event, num) {
 
     if (event.target.value === '%') num *= 0.01; 
     else if (event.target.value === '+/-') num *= -1;
-    else num += event.target.value;
+    else if (num !== 'Infinity') num += event.target.value;
 
-    return num === 0 ? '' : num;
+    return num === 0 ? '' : cleanNumber(num);
 }
 
 function getOperator(event) {
@@ -64,7 +59,7 @@ function getOperator(event) {
 
     if (event.target.value !== '=') operator = event.target.value;
     else operator = '';
-    
+
     num1 = solution;
     num2 = '';
     operationDisplay.textContent = cleanNumber(solution);
@@ -73,11 +68,11 @@ function getOperator(event) {
 function clear() {
     num1 = num2 = operator = '';
     solution = 0;
-    operationDisplay.textContent = 0;
+    operationDisplay.textContent = '';
 }
 
 function cleanNumber(num) {
-    if (num.toString().length > 9) return parseFloat(num).toExponential(3);
+    if (num.toString().length > 9) return parseFloat(num).toExponential(1);
     else return num;
 }
 
