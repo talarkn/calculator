@@ -1,3 +1,4 @@
+let num = '';
 let num1 = '';
 let num2 = '';
 let operator = '';
@@ -32,41 +33,37 @@ function operate(operator, num1, num2) {
     if (operator === '/') return divide(num1, num2);
 }
 
-function getNumber(event) {
+function getNumber(char) {
     let displayedNum;
+
+    if (char === '%') num *= 0.01; 
+    else if (char === '+/-') num *= -1;
+    else if (num !== 'Infinity') num += char;
     
-    if (!operator) displayedNum = num1 = addDigit(event, num1);
-    else displayedNum = num2 = addDigit(event, num2);
+    if (!operator) displayedNum = num1 = cleanNumber(num);
+    else displayedNum = num2 = cleanNumber(num);
 
     operationDisplay.textContent = displayedNum;
-    decimal.value = '.';
 }
 
-function addDigit(event, num) {
-    if (num.toString().includes('.')) decimal.value = '';
-    else if (num === '' && event.target.value === '.') num = 0;
-
-    if (event.target.value === '%') num *= 0.01; 
-    else if (event.target.value === '+/-') num *= -1;
-    else if (num !== 'Infinity') num += event.target.value;
-
-    return num === 0 ? '' : cleanNumber(num);
-}
-
-function getOperator(event) {
+function getOperator(char) {
     if (num2) solution = operate(operator, Number(num1), Number(num2));
     else solution = num1;
 
-    if (event.target.value !== '=') operator = event.target.value;
+    if (char !== '=') operator = char;
     else operator = '';
 
     num1 = solution;
-    num2 = '';
+    num2 = num = '';
     operationDisplay.textContent = cleanNumber(solution);
 }
 
+function addDecimal() {
+    if (!num.toString().includes('.')) num += '.';
+}
+
 function clear() {
-    num1 = num2 = operator = '';
+    num = num1 = num2 = operator = '';
     solution = 0;
     operationDisplay.textContent = '';
 }
@@ -76,8 +73,16 @@ function cleanNumber(num) {
     else return num;
 }
 
-numButtons.forEach((button) => {button.addEventListener('click', getNumber)});
+numButtons.forEach((button) => {button.addEventListener('click', () => getNumber(button.textContent))});
 
-operatorButtons.forEach((button) => {button.addEventListener('click', getOperator)});
+decimal.addEventListener('click', () => addDecimal());
+
+operatorButtons.forEach((button) => {button.addEventListener('click', () => getOperator(button.textContent))});
 
 clearButton.addEventListener('click', clear);
+
+// document.addEventListener('keydown', (event) => {
+//         if (event.key >= 0 || event.key <= 9) { //|| event.target.value === '.' || event.target.value === '%' || event.target.value === '+/-') {
+//             getNumber(event.key);
+//         }
+// });

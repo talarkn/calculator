@@ -52,7 +52,7 @@ button {
     border-radius: 2%;
 }
 
-.number {
+.number, .decimal {
     background-color: rgb(125, 226, 219);
 }
 
