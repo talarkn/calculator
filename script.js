@@ -8,7 +8,7 @@ const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
 const operationDisplay = document.querySelector('.display');
 const clearButton = document.querySelector('.clear');
-const decimal = document.querySelector('.decimal');
+const keyButtons = document.querySelectorAll('.decimal, .percent, .sign');
 
 function add(num1, num2) {
     return num1 + num2;
@@ -34,16 +34,10 @@ function operate(operator, num1, num2) {
 }
 
 function getNumber(char) {
-    let displayedNum;
-
-    if (char === '%') num *= 0.01; 
-    else if (char === '+/-') num *= -1;
-    else if (num !== 'Infinity') num += char;
-    
-    if (!operator) displayedNum = num1 = cleanNumber(num);
-    else displayedNum = num2 = cleanNumber(num);
-
-    operationDisplay.textContent = displayedNum;
+    num += char;
+    if (!operator) num1 = num;
+    else num2 = num;
+    operationDisplay.textContent = cleanNumber(num);
 }
 
 function getOperator(char) {
@@ -54,12 +48,15 @@ function getOperator(char) {
     else operator = '';
 
     num1 = solution;
-    num2 = num = '';
+    num = num2 = '';
     operationDisplay.textContent = cleanNumber(solution);
 }
 
-function addDecimal() {
-    if (!num.toString().includes('.')) num += '.';
+function applyKeyButtons(char) {
+    if (char === '%') num *= 0.01;
+    else if (char === '+/-') num *= -1;
+    else if (!num.toString().includes('.')) num += '.';
+    operationDisplay.textContent = cleanNumber(num);
 }
 
 function clear() {
@@ -75,7 +72,7 @@ function cleanNumber(num) {
 
 numButtons.forEach((button) => {button.addEventListener('click', () => getNumber(button.textContent))});
 
-decimal.addEventListener('click', () => addDecimal());
+keyButtons.forEach((button) => button.addEventListener('click', () => applyKeyButtons(button.textContent)));
 
 operatorButtons.forEach((button) => {button.addEventListener('click', () => getOperator(button.textContent))});
 
