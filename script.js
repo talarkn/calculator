@@ -58,7 +58,7 @@ function getOperator(char) {
 
 function applyKeyButtons(char) {
     if (num === '') num = num1;
-    
+
     if (char === '%') num *= 0.01;
     else if (char === '+/-') num *= -1;
     else if (!num.toString().includes('.')) num += '.';
@@ -87,8 +87,11 @@ operatorButtons.forEach((button) => {button.addEventListener('click', () => getO
 
 clearButton.addEventListener('click', clear);
 
-// document.addEventListener('keydown', (event) => {
-//         if (event.key >= 0 || event.key <= 9) { //|| event.target.value === '.' || event.target.value === '%' || event.target.value === '+/-') {
-//             getNumber(event.key);
-//         }
-// });
+document.addEventListener('keydown', (event) => {
+        if (event.key >= 0 || event.key <= 9) getNumber(event.key);
+        if (event.key === '.' || event.key === '%') applyKeyButtons(event.key);
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') applyKeyButtons('+/-');
+        if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.key === '=') getOperator(event.key);
+        if (event.key === 'Enter') getOperator('=');
+        if (event.key === 'Escape') clear();
+});
