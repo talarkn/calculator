@@ -16,20 +16,25 @@ p, h3 {
     margin: 100px auto;
     display: flex;
     flex-direction: column;
-    height: 360px;
+    height: 380px;
     width: 250px;
     border: solid black 3px;
-    border-radius: 2%;
+    border-radius: 3%;
     background-color: black;
 }
 
 .display {
-    height: 60px;
+    height: 80px;
+    background-color: white;
+    border: solid black;
+    border-radius: 2%;
+}
+
+.display-text {
     font-size: 46px;
     letter-spacing: 1px;
     text-align: right;
-    background-color: white;
-    border: solid black;
+    margin-top: 25px;
 }
 
 .buttons, .left-buttons, .right-buttons {
@@ -58,7 +63,7 @@ button {
     flex: 1 1 60px;
     font-size: 20px;
     border: solid black;
-    border-radius: 2%;
+    border-radius: 6%;
 }
 
 .number, .decimal {

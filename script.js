@@ -6,7 +6,7 @@ let solution = 0;
 
 const numButtons = Array.from(document.querySelectorAll('.number'));
 const operatorButtons = Array.from(document.querySelectorAll('.operator'));
-const operationDisplay = document.querySelector('.display');
+const operationDisplay = document.querySelector('.display-text');
 const clearButton = document.querySelector('.clear');
 const keyButtons = document.querySelectorAll('.decimal, .percent, .sign');
 
@@ -61,7 +61,12 @@ function applyKeyButtons(char) {
 
     if (char === '%') num *= 0.01;
     else if (char === '+/-') num *= -1;
-    else if (!num.toString().includes('.')) num += '.';
+    else if (!num.toString().includes('.')) {
+        if (num === '') num = '0.';
+        else num += '.';
+    }
+
+    if (num === 0) num = '';
 
     assignNumber(num);
 
