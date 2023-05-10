@@ -34,6 +34,7 @@ function operate(operator, num1, num2) {
 }
 
 function getNumber(char) {
+    resetBackgroundColor();
     num += char;
     assignNumber(num);
     operationDisplay.textContent = cleanNumber(num);
@@ -45,6 +46,7 @@ function assignNumber(num) {
 }
 
 function getOperator(char) {
+    resetBackgroundColor();
     if (num2) solution = operate(operator, Number(num1), Number(num2));
     else solution = num1;
 
@@ -69,7 +71,6 @@ function applyKeyButtons(char) {
     if (num === 0) num = '';
 
     assignNumber(num);
-
     operationDisplay.textContent = cleanNumber(num);
 }
 
@@ -77,6 +78,7 @@ function clear() {
     num = num1 = num2 = operator = '';
     solution = 0;
     operationDisplay.textContent = '';
+    resetBackgroundColor();
 }
 
 function cleanNumber(num) {
@@ -84,11 +86,27 @@ function cleanNumber(num) {
     else return num;
 }
 
+function lightenBackgroundColor(event) {
+    operatorButtons.forEach((button) => {
+        if (event === button.value) button.classList.toggle('lighter-operator');
+    });
+}
+
+function resetBackgroundColor() {
+    operatorButtons.forEach((button) => {
+        if (button.classList.contains('lighter-operator')) button.classList.toggle('lighter-operator');
+    });
+}
+
 numButtons.forEach((button) => {button.addEventListener('click', () => getNumber(button.textContent))});
 
-keyButtons.forEach((button) => button.addEventListener('click', () => applyKeyButtons(button.textContent)));
+keyButtons.forEach((button) => {button.addEventListener('click', () => applyKeyButtons(button.textContent))});
 
-operatorButtons.forEach((button) => {button.addEventListener('click', () => getOperator(button.textContent))});
+operatorButtons.forEach((button) => {button.addEventListener('click', () => {
+    getOperator(button.textContent);
+    lightenBackgroundColor(button.value);
+    });
+});
 
 clearButton.addEventListener('click', clear);
 
@@ -96,7 +114,13 @@ document.addEventListener('keydown', (event) => {
         if (event.key >= 0 || event.key <= 9) getNumber(event.key);
         if (event.key === '.' || event.key === '%') applyKeyButtons(event.key);
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') applyKeyButtons('+/-');
-        if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.key === '=') getOperator(event.key);
-        if (event.key === 'Enter') getOperator('=');
         if (event.key === 'Escape') clear();
+        if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.key === '=') {
+            getOperator(event.key);
+            lightenBackgroundColor(event.key);
+        }
+        if (event.key === 'Enter') {
+            getOperator('=');
+            lightenBackgroundColor('=');
+        }
 });

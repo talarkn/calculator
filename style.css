@@ -34,7 +34,7 @@ p, h3 {
     font-size: 46px;
     letter-spacing: 1px;
     text-align: right;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 .buttons, .left-buttons, .right-buttons {
@@ -72,6 +72,10 @@ button {
 
 .operator {
     background-color: rgb(97, 214, 171);
+}
+
+.lighter-operator {
+    background-color: rgb(190, 232, 216);
 }
 
 .top-buttons {
