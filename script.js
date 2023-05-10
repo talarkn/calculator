@@ -63,7 +63,7 @@ function applyKeyButtons(char) {
 
     if (char === '%') currentNumber *= 0.01;
     else if (char === '+/-') currentNumber *= -1;
-    else if (!num.toString().includes('.')) {
+    else if (!currentNumber.toString().includes('.')) {
         if (currentNumber === '') currentNumber = '0.';
         else currentNumber += '.';
     }
