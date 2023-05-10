@@ -1,6 +1,6 @@
-let num = '';
-let num1 = '';
-let num2 = '';
+let currentNumber = '';
+let firstNumber = '';
+let secondNumber = '';
 let operator = '';
 let solution = 0;
 
@@ -10,85 +10,85 @@ const operationDisplay = document.querySelector('.display-text');
 const clearButton = document.querySelector('.clear');
 const keyButtons = document.querySelectorAll('.decimal, .percent, .sign');
 
-function add(num1, num2) {
-    return num1 + num2;
+function add(firstNumber, secondNumber) {
+    return firstNumber + secondNumber;
 }
 
-function substract(num1, num2) {
-    return num1 - num2;
+function substract(firstNumber, secondNumber) {
+    return firstNumber - secondNumber;
 }
 
-function multiply(num1, num2) {
-    return num1 * num2;
+function multiply(firstNumber, secondNumber) {
+    return firstNumber * secondNumber;
 }
 
-function divide(num1, num2) {
-    return num1 / num2;
+function divide(firstNumber, secondNumber) {
+    return firstNumber / secondNumber;
 }
 
-function operate(operator, num1, num2) {
-    if (operator === '+') return add(num1, num2);
-    if (operator === '-') return substract(num1, num2);
-    if (operator === '*') return multiply(num1, num2);
-    if (operator === '/') return divide(num1, num2);
+function operate(operator, firstNumber, secondNumber) {
+    if (operator === '+') return add(firstNumber, secondNumber);
+    if (operator === '-') return substract(firstNumber, secondNumber);
+    if (operator === '*') return multiply(firstNumber, secondNumber);
+    if (operator === '/') return divide(firstNumber, secondNumber);
 }
 
 function getNumber(char) {
     resetBackgroundColor();
-    num += char;
-    assignNumber(num);
-    operationDisplay.textContent = cleanNumber(num);
+    currentNumber += char;
+    assignNumber(currentNumber);
+    operationDisplay.textContent = cleanNumber(currentNumber);
 }
 
-function assignNumber(num) {
-    if (!operator) num1 = num;
-    else num2 = num;
+function assignNumber(currentNumber) {
+    if (!operator) firstNumber = currentNumber;
+    else secondNumber = currentNumber;
 }
 
 function getOperator(char) {
     resetBackgroundColor();
-    if (num2) solution = operate(operator, Number(num1), Number(num2));
-    else solution = num1;
+    if (secondNumber) solution = operate(operator, Number(firstNumber), Number(secondNumber));
+    else solution = firstNumber;
 
     if (char !== '=') operator = char;
     else operator = '';
 
-    num1 = solution;
-    num = num2 = '';
+    firstNumber = solution;
+    currentNumber = secondNumber = '';
     operationDisplay.textContent = cleanNumber(solution);
 }
 
 function applyKeyButtons(char) {
-    if (num === '') num = num1;
+    if (currentNumber === '') currentNumber = firstNumber;
 
-    if (char === '%') num *= 0.01;
-    else if (char === '+/-') num *= -1;
+    if (char === '%') currentNumber *= 0.01;
+    else if (char === '+/-') currentNumber *= -1;
     else if (!num.toString().includes('.')) {
-        if (num === '') num = '0.';
-        else num += '.';
+        if (currentNumber === '') currentNumber = '0.';
+        else currentNumber += '.';
     }
 
-    if (num === 0) num = '';
+    if (currentNumber === 0) currentNumber = '';
 
-    assignNumber(num);
-    operationDisplay.textContent = cleanNumber(num);
+    assignNumber(currentNumber);
+    operationDisplay.textContent = cleanNumber(currentNumber);
 }
 
 function clear() {
-    num = num1 = num2 = operator = '';
+    currentNumber = firstNumber = secondNumber = operator = '';
     solution = 0;
     operationDisplay.textContent = '';
     resetBackgroundColor();
 }
 
-function cleanNumber(num) {
-    if (num.toString().length > 9) return parseFloat(num).toExponential(1);
-    else return num;
+function cleanNumber(currentNumber) {
+    if (currentNumber.toString().length > 9) return parseFloat(currentNumber).toExponential(1);
+    else return currentNumber;
 }
 
-function lightenBackgroundColor(event) {
+function lightenBackgroundColor(e) {
     operatorButtons.forEach((button) => {
-        if (event === button.value) button.classList.toggle('lighter-operator');
+        if (e === button.value) button.classList.toggle('lighter-operator');
     });
 }
 
@@ -110,16 +110,16 @@ operatorButtons.forEach((button) => {button.addEventListener('click', () => {
 
 clearButton.addEventListener('click', clear);
 
-document.addEventListener('keydown', (event) => {
-        if (event.key >= 0 || event.key <= 9) getNumber(event.key);
-        if (event.key === '.' || event.key === '%') applyKeyButtons(event.key);
-        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') applyKeyButtons('+/-');
-        if (event.key === 'Escape') clear();
-        if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.key === '=') {
-            getOperator(event.key);
-            lightenBackgroundColor(event.key);
+document.addEventListener('keydown', (e) => {
+        if (e.key >= 0 || e.key <= 9) getNumber(e.key);
+        if (e.key === '.' || e.key === '%') applyKeyButtons(e.key);
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') applyKeyButtons('+/-');
+        if (e.key === 'Escape') clear();
+        if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '=') {
+            getOperator(e.key);
+            lightenBackgroundColor(e.key);
         }
-        if (event.key === 'Enter') {
+        if (e.key === 'Enter') {
             getOperator('=');
             lightenBackgroundColor('=');
         }
