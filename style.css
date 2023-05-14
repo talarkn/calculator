@@ -18,7 +18,7 @@ p, h3 {
     flex-direction: column;
     height: 380px;
     width: 250px;
-    border: solid black 3px;
+    border: 3.5px solid black;
     border-radius: 3%;
     background-color: black;
 }
@@ -26,8 +26,8 @@ p, h3 {
 .display {
     height: 80px;
     background-color: white;
-    border: solid black;
-    border-radius: 2%;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 .display-text {
@@ -62,8 +62,8 @@ button {
     padding: 10px;
     flex: 1 1 60px;
     font-size: 20px;
-    border: solid black;
-    border-radius: 6%;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 .number, .decimal {
